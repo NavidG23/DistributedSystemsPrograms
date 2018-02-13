@@ -1,0 +1,16 @@
+Instructions.
+1. Run the server:
+	1.1. Navigate to path with Server file (located in pa2.jar)
+		Example: cd C:\RMI
+	1.2. Run Server: java -cp pa2.jar Server
+2. Open another CMD window and Run the client:
+	2.1. Navigate to path with Client file (located in pa2.jar)
+		Example: cd C:\RMI
+	2.2. Run Client: java -cp pa2.jar Client <command> <rest of arguments>...
+		Example of upload file     : java -cp pa2.jar Client upload <client path> <server path>
+		Example of download file   : java -cp pa2.jar Client download <server path> <client path>
+		Example of list directory  : java -cp pa2.jar Client dir <server path>
+		Example of create directory: java -cp pa2.jar Client mkdir <server path>
+		Example of remove directory: java -cp pa2.jar Client rmdir <server path>
+		Example of delete file     : java -cp pa2.jar Client rm <server path>
+		Example of server shutdown: java -cp pa2.jar Client shutdown

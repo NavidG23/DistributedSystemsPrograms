@@ -1,0 +1,17 @@
+Instructions.
+1. Run the server:
+	1.1. java -cp pa1.jar Server start <port number>
+		Example: java -cp pa1.jar Server start 8000
+
+2. Run the client:
+	1.1. Set the environment variable PA1_SERVER=<server address>:<port number>
+		Example in 'Command Prompt'    : set PA1_SERVER=127.0.0.1:8000
+		Example in 'Terminal (*nix)'  : export PA1_SERVER=127.0.0.1:8000
+	1.2. java -cp pa1.jar Client <command> <rest of arguments>...
+		Example of upload file     : java -cp pa1.jar Client upload <client path> <server path>
+		Example of download file   : java -cp pa1.jar Client download <server path> <client path>
+		Example of list directory  : java -cp pa1.jar Client dir <server path>
+		Example of create directory: java -cp pa1.jar Client mkdir <server path>
+		Example of remove directory: java -cp pa1.jar Client rmdir <server path>
+		Example of delete file     : java -cp pa1.jar Client rm <server path>
+		Example of  server shutdown: java -cp pa1.jar Client shutdown
