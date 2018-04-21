@@ -1,12 +1,11 @@
-package rmiclientserver;
-
 import java.rmi.registry.Registry;
+import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry; 
-import java.rmi.server.UnicastRemoteObject; 
+import java.rmi.server.UnicastRemoteObject;
 
 /** 
  *   Class Server creates new registry on port 1099 and binds 
@@ -19,10 +18,11 @@ import java.rmi.server.UnicastRemoteObject;
  *
  */
 
-public class Server extends ImplExample 
+public class Server extends ServerImplementation 
 { 
-   static ImplExample obj;
-   static Hello stub;
+  
+   static ServerImplementation obj;
+   static RemoteInterface stub;
    static Registry registry;
    static Server s; 
    
@@ -30,62 +30,61 @@ public class Server extends ImplExample
    { 
 	  s = new Server();
 	  s.setUpAndBind();
+      
    } 
    
    public Server()
    {
 	   super(s);
-	   obj = new ImplExample(this); 
+	   obj = new ServerImplementation(this); 
    }
    
    public void setUpAndBind()
    {
-
+	   // Exporting the object of implementation class  
+       // (here we are exporting the remote object to the stub) 
        try 
        {
-    	   	// Exporting the object of implementation class  
-	        // (here we are exporting the remote object to the stub) 
-			stub = (Hello) UnicastRemoteObject.exportObject(obj, 0);
-			
-			// Binding the remote object (stub) in the registry 
-			registry = LocateRegistry.getRegistry(); 
-	       
-	 
-	       
-			System.err.println("Server ready");
+            stub = (RemoteInterface) UnicastRemoteObject.exportObject(obj, 1099);
+
+            // Binding the remote object (stub) in the registry 
+            registry = LocateRegistry.createRegistry(1099); 
+
+            System.err.println("Server ready");
 	   }
        catch (RemoteException e)
        {
-    	   e.printStackTrace();
+            e.printStackTrace();
 	   }  
        try 
        {
-    	   registry.bind("Interface", stub);
+            registry.bind("Interface", stub);
 	   }
        catch (RemoteException | AlreadyBoundException e) 
        {
-    	   e.printStackTrace();
-       } 
+		e.printStackTrace();
+	   } 
+    }
       
-   }
+   
    public static void stopServer()
    {
-	    try
-	    {
-			UnicastRemoteObject.unexportObject(stub, true);
+	    try 
+        {
+			UnicastRemoteObject.unexportObject(obj, true);
 		}
 	    catch (NoSuchObjectException e) 
-	    {
+        {
 			e.printStackTrace();
 		}
-	   
-		try 
-		{
+	    try 
+        {
 			registry.unbind("Interface");
 		} 
-		catch (RemoteException | NotBoundException e) 
+        catch (RemoteException | NotBoundException e) 
 		{
 			e.printStackTrace();
-		}      
+		}
+        
    }
 } 

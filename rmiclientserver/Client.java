@@ -1,5 +1,3 @@
-package rmiclientserver;
-
 import java.rmi.registry.LocateRegistry; 
 import java.rmi.registry.Registry;
 import java.util.Arrays;
@@ -14,7 +12,6 @@ import java.util.List;
  * 	Fall 2017
  *
  */
-
 public class Client 
 { 
    public static void main(String[] args) 
@@ -24,15 +21,15 @@ public class Client
          // Getting the registry
          Registry registry = LocateRegistry.getRegistry(null);
          // Looking up the registry for the remote object
-         ImplExample stub = (ImplExample) registry.lookup("Interface"); 
-         
-         if (args.length < 1) 
-         {
+         RemoteInterface stub = (RemoteInterface) registry.lookup("Interface"); 
+          
+        if (args.length < 1) 
+        {
              System.out.println("Client command argument is missing, please retry with an argument.");
              return;
-         }	 
+        }	 	 
         switch(args[0].toLowerCase())
-     	 {
+        {
      	  case "upload": 
                 String responseNewUpload = stub.uploadFile(args[1], args[2]);
                 System.out.println(responseNewUpload);
@@ -68,7 +65,7 @@ public class Client
               break;
      	  default:         
               System.out.println("invalid input");        	
-     		}
+          }
       }
       catch (Exception e)
       {

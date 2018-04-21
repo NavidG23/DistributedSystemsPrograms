@@ -1,5 +1,3 @@
-package rmiclientserver;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.rmi.RemoteException;
@@ -7,27 +5,30 @@ import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+
 /** 
- *   Class ServerImplementation is the meat of this program and contains all implementation for RemoteInterface.
- *   This allows the client to access functions to execute on remote server. 
+ *   Class ServerImplementation is the meat of this program and
+ *   contains all implementation for RemoteInterface.
+ *   This allows the client to access functions to execute on
+ *   remote server. 
  * 
- *	 @author Navid Galt
+ *   @author Navid Galt
  *   SWE 622
- * 	 Fall 2017
+ *   Fall 2017
  *
  */
 
-public class ImplExample implements Hello 
+public class ServerImplementation implements RemoteInterface 
 {  
-	Server sptr;
+    Server sptr;
 	
-	public ImplExample(Server s)
+	public ServerImplementation(Server s)
 	{
-		sptr=s;;
+		sptr=s;
 	}
-	public String uploadFile(String filenameToUpload, String outputFile) throws RemoteException
+    public String uploadFile(String filenameToUpload, String outputFile) throws RemoteException
 	{
-		if(readFile(filenameToUpload) == null)
+    	if(readFile(filenameToUpload) == null)
 		{
 			return "file does not exist at specified location";
 		}
@@ -75,13 +76,13 @@ public class ImplExample implements Hello
              
                 if(fileExists)
                 {
-                    msg = "Starting upload at... " + ((float)partial_length/(float)full_length)*100 + "%" + "\nFile Uploaded Successfully";
+                    msg = "Starting at " + ((float)partial_length/(float)full_length)*100 + "%" + "\nFile Uploaded Successfully";
                 }
                 else
                 {
                     msg = "Creating new file... \nFile Uploaded Successfully";
                 }
-            }
+            }    
         }
         catch(Exception e)
         {
@@ -92,7 +93,7 @@ public class ImplExample implements Hello
     
     private byte[] getBytes(String filename)
     {
-    	if(this.doesFileExist(filename) == true)
+    	if(this.doesFileExist(filename)==true)
     	{
     		return this.readFile(filename).getBytes();
     	}
@@ -127,10 +128,10 @@ public class ImplExample implements Hello
     	            result += line;
     	        }
     	    }
-    	   catch(Exception e)
-    	   {
+    	    catch(Exception e)
+ 		{
     		   System.out.println(e.getMessage());
-    	   }
+ 		}
     	return result;
     }
     
@@ -185,11 +186,11 @@ public class ImplExample implements Hello
              
                 if(fileExists)
                 {
-                    msg = "Starting download at... " + ((float)partial_length/(float)full_length)*100 + "%" + "\nFile Uploaded Successfully";
+                    msg = "Starting download at... " + ((float)partial_length/(float)full_length)*100 + "%" + "\nFile Downloaded Successfully";
                 }
                 else
                 {
-                    msg = "Downloading new file... \nFile Uploaded Successfully";
+                    msg = "Downloading new file... \nFile Downloaded Successfully";
                 }
             }
         }
@@ -197,7 +198,7 @@ public class ImplExample implements Hello
         {
         	System.out.println(e.getMessage());
         }
-        return msg;	
+        return msg;		
 	}
 	
 	public String makeDirectory(String serverPath) throws RemoteException
@@ -261,8 +262,8 @@ public class ImplExample implements Hello
 	 }
      
     @SuppressWarnings("static-access")
-	public void shutdown() throws RemoteException
-     {
-    	sptr.stopServer();
-     }
+    public void shutdown() throws RemoteException
+    {
+        sptr.stopServer();
+    }
 } 

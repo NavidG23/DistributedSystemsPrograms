@@ -1,5 +1,3 @@
-package rmiclientserver;
-
 import java.rmi.Remote; 
 import java.rmi.RemoteException;
 
@@ -13,7 +11,8 @@ import java.rmi.RemoteException;
  *
  */
 
-public interface Hello extends Remote 
+// Creating Remote interface for application 
+public interface RemoteInterface extends Remote 
 {  
    public String uploadFile(String filenameToUpload, String outputFile) throws RemoteException;
    
